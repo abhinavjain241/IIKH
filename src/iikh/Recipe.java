@@ -24,11 +24,30 @@ public class Recipe {
         rcount++;
     }
     
+    public Recipe(){
+        rcount++;
+        name = null;
+        ingredients = null;
+        instruction = null;
+    }
+    
     public Recipe(Recipe r){
         rid = r.rid;
         name = r.name;
         ingredients = r.ingredients;
         instruction = r.instruction;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getIngredients() {
+        return ingredients;
+    }
+
+    public String getInstruction() {
+        return instruction;
     }
     
     public void setName(String name) {
@@ -44,7 +63,9 @@ public class Recipe {
     }
     
     public String print(){
-        String info = "Hello, add the recipe information here -nav";
-        return info;
+        String n = "The name of the recipe is: "+name+"\n";
+        String in = "The ingredients required are: "+ingredients+'\n';
+        String ins = "The instructions are: "+instruction+'\n';
+        return n+in+ins;
     }
 }

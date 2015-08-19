@@ -33,17 +33,7 @@ public class IIKH {
             switch(action){
                 case 0: {
                     System.out.println("Adding Recipe");
-                    
-                    System.out.println("Enter the name of Recipe:");
-                    String cstr = in.nextLine();
-                    String rname = in.nextLine();
-                    System.out.println("Enter the ingredients of Recipe:");
-                    String ingr = in.nextLine();
-                    System.out.println("Enter the instructions of Recipe:");
-                    String inst = in.nextLine();
-                    
-                    Recipe r = new Recipe(rname, ingr, inst);
-                    recipeDB.addRecipe(r);
+                    recipeDB.addRecipe();
                     break;
                 }
                 
@@ -52,24 +42,7 @@ public class IIKH {
                     
                     System.out.println("Enter the Recipe id to be edited");
                     int rid = in.nextInt();
-                    System.out.println("Enter 0 for editing name");
-                    System.out.println("Enter 1 for editing ingredients");
-                    System.out.println("Enter 2 for editing instructions");
-                    int act = in.nextInt();
-                    String redit=null;
-                    if(act==0){
-                        System.out.println("Enter new name");
-                        redit = in.nextLine();
-                    }
-                    else if(act==1){
-                        System.out.println("Enter the new ingredients");
-                        redit = in.nextLine();
-                    }
-                    else{
-                        System.out.println("Enter new instructions");
-                        redit = in.nextLine();
-                    }
-                    recipeDB.editRecipe(rid, act, redit);
+                    recipeDB.editRecipe(rid);
                     break;
                 }
                 
