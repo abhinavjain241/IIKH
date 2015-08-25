@@ -20,27 +20,23 @@ import java.util.Arrays;
 
 /**
  *
- * @author oop31
+ * @author abhinav
  */
 
-public class Database {
-    String recipeName;
-    ArrayList<String> indegrients;
-    ArrayList<String> method;
+public class PlanData{
+    String planName;
+    ArrayList<String> plans;
     
-    private String parsetoString(String recipeName, ArrayList<String> indegrients, ArrayList<String> method){
-        String out = recipeName + ",,";
-        for(String x: indegrients)
+    private String parsetoString(String planName, ArrayList<String> recipes){
+        String out = planName + ",,";
+        for(String x: recipes)
             out += (x + "::");
-        out += ",,";
-        for(String x: method)
-            out += (x + "::");
-        //System.out.print( out );
+      //  System.out.print( out + "vsd");
         return out;
     }
-    public void addRecipe(String recipeName, ArrayList<String> indegrients, ArrayList<String> method){
-        try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("recipeList.txt", true)))) {
-            out.println(parsetoString(recipeName, indegrients, method));  
+    public void addPlan(String planName, ArrayList<String> recipes){
+        try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("planList.txt", true)))) {
+            out.println(parsetoString(planName, recipes));  
        //     System.out.print("ksadlvbw");
         }catch (IOException e) {
             e.printStackTrace();
@@ -48,14 +44,12 @@ public class Database {
         }
      //   System.out.print("ksadlvbw");
     }  
-    public ArrayList<String> repNames(){
+    public ArrayList<String> planNames(){
         BufferedReader br = null;
         ArrayList<String> list = new ArrayList<String>();
-     //   System.out.println("here ");
 	try {
             String line;
-            br = new BufferedReader(new FileReader("recipeList.txt"));
-          //  System.out.println("here ");
+            br = new BufferedReader(new FileReader("planList.txt"));
             while ((line = br.readLine()) != null) {
                 String[] x = line.split(",,");
                 list.add(x[0]);
@@ -63,34 +57,31 @@ public class Database {
 	} catch (IOException e) {
             e.printStackTrace();
         }       
-      //  System.out.println("here ");
         return list;       
     }    
-    public void getRecipe(String recipeName){
+    public void getPlan(String planName){
         BufferedReader br = null;
-        this.recipeName = null;
-        this.indegrients = null;
-        this.method = null;
+        this.planName = null;
+        this.plans = null;
 	try {
             String line;
-            br = new BufferedReader(new FileReader("recipeList.txt"));
+            br = new BufferedReader(new FileReader("planList.txt"));
             while ((line = br.readLine()) != null) {
                 String[] x = line.split(",,");
-                if(x[0].equals(recipeName)){
-                    this.recipeName = recipeName;
-                    this.indegrients = new ArrayList<String>(Arrays.asList(x[1].split("::")));
-                    this.method = new ArrayList<String>(Arrays.asList(x[2].split("::")));
+                if(x[0].equals(planName)){
+                    this.planName = planName;
+                    this.plans = new ArrayList<String>(Arrays.asList(x[1].split("::")));
                 }
             }
 	} catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public void editRecipe(String oldRecipeName, String newRecipeName, ArrayList<String> indegrients, ArrayList<String> method ){
+    public void editPlan(String oldplanName, String newplanName, ArrayList<String> recipes){
         try {
             // Open the file that is the first
             // command line parameter
-            FileInputStream fstream = new FileInputStream("recipeList.txt");
+            FileInputStream fstream = new FileInputStream("planList.txt");
             BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
             String strLine;
             StringBuilder fileContent = new StringBuilder();
@@ -101,9 +92,9 @@ public class Database {
                 String tokens[] = strLine.split(",,");
                 if (tokens.length > 0) {
                     // Here tokens[0] will have value of ID
-                    if (tokens[0].equals(oldRecipeName)) {  
+                    if (tokens[0].equals(oldplanName)) {  
                         System.out.print("here");
-                        String newLine = parsetoString(newRecipeName, indegrients, method);
+                        String newLine = parsetoString(newplanName, recipes);
                         fileContent.append(newLine);
                         fileContent.append("\n");
                     } else {
@@ -114,7 +105,7 @@ public class Database {
                 }
             }
             // Now fileContent will have updated content , which you can override into file
-            FileWriter fstreamWrite = new FileWriter("recipeList.txt");
+            FileWriter fstreamWrite = new FileWriter("planList.txt");
             BufferedWriter out = new BufferedWriter(fstreamWrite);
             out.write(fileContent.toString());
             out.close();
@@ -124,11 +115,11 @@ public class Database {
             System.err.println("Error: " + e.getMessage());
         }
     }
-    public void removeRecipe(String RecipeName ){
+    public void removePlan(String planName ){
         try {
             // Open the file that is the first
             // command line parameter
-            FileInputStream fstream = new FileInputStream("recipeList.txt");
+            FileInputStream fstream = new FileInputStream("planList.txt");
             BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
             String strLine;
             StringBuilder fileContent = new StringBuilder();
@@ -139,7 +130,7 @@ public class Database {
                 String tokens[] = strLine.split(",,");
                 if (tokens.length > 0) {
                     // Here tokens[0] will have value of ID
-                    if (!tokens[0].equals(RecipeName)) {  
+                    if (!tokens[0].equals(planName)) {  
                         // update content as it is
                         fileContent.append(strLine);
                         fileContent.append("\n");
@@ -147,7 +138,7 @@ public class Database {
                 }
             }
             // Now fileContent will have updated content , which you can override into file
-            FileWriter fstreamWrite = new FileWriter("recipeList.txt");
+            FileWriter fstreamWrite = new FileWriter("planList.txt");
             BufferedWriter out = new BufferedWriter(fstreamWrite);
             out.write(fileContent.toString());
             out.close();
@@ -157,10 +148,7 @@ public class Database {
             System.err.println("Error: " + e.getMessage());
         }
     }
-    public ArrayList<String> getIndegrients(){
-        return this.indegrients;
-    }
-    public ArrayList<String> getMethod(){
-        return this.method;
+    public ArrayList<String> getPlans(){
+        return this.plans;
     }
 }
